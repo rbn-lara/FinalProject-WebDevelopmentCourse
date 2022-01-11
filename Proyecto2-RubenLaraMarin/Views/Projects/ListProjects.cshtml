@@ -1,0 +1,186 @@
+﻿@model Proyecto2_RubenLaraMarin.Models.CustomModel
+
+@{
+    ViewData["Title"] = "ListProjects";
+}
+
+<h1 class="text-center">Proyectos</h1>
+
+<p>
+    <a asp-action="CreateProject">Agregar otro proyecto</a>
+</p>
+<div class="table-responsive" >
+    <table class="table" style="width:150%">
+        <thead class="text-center">
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Cliente
+                </th>
+                <th>
+                    Nombre de proyecto
+                </th>
+                <th>
+                    Habitaciones
+                </th>
+                <th>
+                    Baños completos
+                </th>
+                <th>
+                    Medios baños
+                </th>
+                <th>
+                    Sala y cocina juntas
+                </th>
+                <th>
+                    Área de pilas exterior
+                </th>
+                <th>
+                    Tamaño de terraza
+                </th>
+                <th>
+                    Tipo de piso
+                </th>
+                <th>
+                    Tipo de mueble de cocina
+                </th>
+                <th>
+                    Tamaño de construcción
+                </th>
+                <th>
+                    Precio por metro cuadrado
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+
+            @foreach (var item in Model.Projects)
+            {
+                <tr>                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rooms)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bathrooms)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HalfBathrooms)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsLivingRoomKitchen)
+                        @if (item.IsLivingRoomKitchen)
+                        {
+                            <p class="d-inline">Sí</p>
+                        }
+                        else
+                        {
+                            <p class="d-inline">No</p>
+                        }
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HaveSinkOutdoors)
+                        @if (item.HaveSinkOutdoors)
+                        {
+                            <p class="d-inline">Sí</p>
+                        }
+                        else
+                        {
+                            <p class="d-inline">No</p>
+                        }
+                    </td>
+
+                    <td>
+                        @switch (item.Terrace)
+                        {
+                            case 0:
+                                <p>Pequeña</p>
+                                break;
+                            case 1:
+                                <p>Mediana</p>
+                                break;
+                            case 2:
+                                <p>Grande</p>
+                                break;
+                        }
+                    </td>
+                    
+                    <td>
+                        @switch (item.FloorType)
+                        {
+                            case 0:
+                                <p>Concreto Lujado</p>
+                                break;
+                            case 1:
+                                <p>Porcelanato</p>
+                                break;
+                            case 2:
+                                <p>Cerámica</p>
+                                break;
+                        }
+                    </td>
+    
+                    <td>
+                        @switch (item.KitchenFurnitureType)
+                        {
+                            case 0:
+                                <p>Granito</p>
+                                break;
+                            case 1:
+                                <p>Cuarzo</p>
+                                break;
+                            case 2:
+                                <p>Terrazo</p>
+                                break;
+                        }
+                    </td>
+    
+                    <td>
+                        @switch (item.ConstructionSize)
+                        {
+                            case 0:
+                                <p>50m²-80m²</p>
+                                break;
+                            case 1:
+                                <p>80m²-100m²</p>
+                                break;
+                            case 2:
+                                <p>100m²-150m²</p>
+                                break;
+                            case 3:
+                                <p>150m²-200m²</p>
+                                break;
+                            case 4:
+                                <p>200m²-300m²</p>
+                                break;
+                        }
+                    </td>
+    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PriceBySquaredMeter)
+                    </td>
+                    <td>
+                        <img width="150" height="100" src="@(Model.Images[item.ProjectId].Equals(string.Empty) ? "" : @String.Format("data:image/Bmp;base64,{0}", Model.Images[item.ProjectId]))" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id=item.ProjectId })
+                    </td>
+                    </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+

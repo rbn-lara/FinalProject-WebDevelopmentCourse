@@ -1,0 +1,154 @@
+﻿@model Proyecto2_RubenLaraMarin.Models.Project
+@using Newtonsoft.Json;
+@{
+    ViewData["Title"] = "CreateProject";
+}
+<script src="~/lib/jquery/dist/jquery-3.6.0.min.js"></script>
+<script src="~/js/price-formula.js"></script>
+<script src="~/js/check.js"></script>
+
+<h1>Crear Proyecto</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateProject" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClientId" class="control-label"></label>
+                <select asp-for="ClientId" name="cliente" class="form-control">
+                    @foreach (var item in JsonConvert.DeserializeObject<List<Client>>(TempData["ClientCollection"].ToString()))
+                    {
+                        <option value="@item.ClientId">@item.ClientId</option>
+                    }
+                </select>
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectName" class="control-label"></label>
+                <input asp-for="ProjectName" class="form-control" />
+                <span asp-validation-for="ProjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rooms" class="control-label"></label>
+                <input asp-for="Rooms" class="form-control" id="room-count" />
+                <span asp-validation-for="Rooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bathrooms" class="control-label"></label>
+                <input asp-for="Bathrooms" class="form-control" id="bathroom-count" />
+                <span asp-validation-for="Bathrooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HalfBathrooms" class="control-label"></label>
+                <input asp-for="HalfBathrooms" class="form-control" id="half-bathroom-count" />
+                <span asp-validation-for="HalfBathrooms" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" name="IsLivingRoomKitchen" type="checkbox" id="is-living-kitchen" value="false"/> @Html.DisplayNameFor(model => model.IsLivingRoomKitchen)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" name="HaveSinkOutdoors" type="checkbox" id="outdoors-sink" value="false"/> @Html.DisplayNameFor(model => model.HaveSinkOutdoors)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Terrace" class="control-label"></label>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="Terrace" type="radio" value="0" name="terrace-size-radio" id="small-terrace" checked />
+                    <label class="form-check-label" for="small-terrace">Pequeña</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="Terrace" type="radio" value="1" name="terrace-size-radio" id="medium-terrace" />
+                    <label class="form-check-label" for="medium-terrace">Mediana</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="Terrace" type="radio" value="2" name="terrace-size-radio" id="large-terrace" />
+                    <label class="form-check-label" for="large-terrace">Grande</label>
+                </div>
+                <span asp-validation-for="Terrace" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FloorType" class="control-label"></label>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="FloorType" type="radio" value="0" name="floor-type-radio" id="concrete-floor" checked />
+                    <label class="form-check-label" for="concrete-floor">Concreto Lujado</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="FloorType" type="radio" value="1" name="floor-type-radio" id="porcelain-floor" />
+                    <label class="form-check-label" for="porcelain-floor">Porcelanato</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="FloorType" type="radio" value="2" name="floor-type-radio" id="ceramic-floor" />
+                    <label class="form-check-label" for="ceramic-floor">Cerámica</label>
+                </div>
+                <span asp-validation-for="FloorType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KitchenFurnitureType" class="control-label"></label>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="KitchenFurnitureType" type="radio" value="0" name="furniture-type-radio" id="granite" checked />
+                    <label class="form-check-label" for="granite">Granito</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="KitchenFurnitureType" type="radio" value="1" name="furniture-type-radio" id="quartz" />
+                    <label class="form-check-label" for="quartz">Cuarzo</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="KitchenFurnitureType" type="radio" value="2" name="furniture-type-radio" id="terracota" />
+                    <label class="form-check-label" for="terracota">Terrazo</label>
+                </div>
+                <span asp-validation-for="KitchenFurnitureType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConstructionSize" class="control-label"></label>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="ConstructionSize" type="radio" value="0" name="construction-size-radio" id="extra-small" checked />
+                    <label class="form-check-label" for="extra-small">50m²-80m²</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="ConstructionSize" type="radio" value="1" name="construction-size-radio" id="small" />
+                    <label class="form-check-label" for="small">80m²-100m²</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="ConstructionSize" type="radio" value="2" name="construction-size-radio" id="medium" />
+                    <label class="form-check-label" for="medium">100m²-150m²</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="ConstructionSize" type="radio" value="3" name="construction-size-radio" id="large" />
+                    <label class="form-check-label" for="large">150m²-200m²</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="ConstructionSize" type="radio" value="4" name="construction-size-radio" id="extra-large" />
+                    <label class="form-check-label" for="extra-large">200m²-300m²</label>
+                </div>
+                <span asp-validation-for="ConstructionSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectImage" class="control-label"></label>
+                <br />
+                <input asp-for="ProjectImage" accept="image/*" class="form-check-input" />
+                <br />
+                <span asp-validation-for="ProjectImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriceBySquaredMeter" class="control-label"></label>
+                <input type="hidden" asp-for="PriceBySquaredMeter" id="hidden-price" />
+                <input class="form-control-plaintext border-dark text-center font-weight-bold" type="text" readonly id="price" value="" />
+                <span asp-validation-for="PriceBySquaredMeter" class="text-danger" id="validation-message"></span>
+                <button type="button" class="btn-block btn-dark" id="validate-btn">Cotizar</button>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

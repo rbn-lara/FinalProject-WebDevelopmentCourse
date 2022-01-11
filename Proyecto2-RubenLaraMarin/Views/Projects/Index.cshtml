@@ -1,0 +1,48 @@
+﻿@section Styles{
+    <link rel="stylesheet" href="./css/stylesheet.css" />
+}
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+@if (ViewBag.Message != null)
+{
+    
+    <script>
+        $(document).ready(function() {
+        alert("@ViewBag.Message");
+        });
+    </script>
+}
+<h1 class="text-center">Proyectos</h1>
+
+<div class="card-deck" style="margin:10%">
+
+    <div class="card bg-dark">
+        <a class="nav-link" asp-controller="Projects" asp-action="CreateProject">
+            <div class="card-body text-center text-white">
+                <h5 class="card-title font-weight-bold">Diseñar Proyecto</h5>
+                <p class="card-text">Aquí puede diseñar y cotizar un proyecto de vivienda</p>
+            </div>
+        </a>
+    </div>
+
+
+    <div class="card bg-dark align-content-center align-items-center">
+        <form asp-action="ListProjects">
+            <button type="submit" class="nav-link bg-dark border-0" formaction="ListProjects">
+                <div class="card-body text-center text-white">
+                    <h5 class="card-title font-weight-bold">Ver Proyectos de</h5>
+
+                    <p class="card-text">Click aquí para ver los proyectos cotizados</p>
+                </div>
+            </button>
+            <input type="text" name="id" id="id" placeholder="Id de Cliente" class="text-center col-lg" />
+        </form>
+    </div>
+
+
+</div>

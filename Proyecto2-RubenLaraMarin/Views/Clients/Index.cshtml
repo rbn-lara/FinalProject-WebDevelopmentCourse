@@ -1,0 +1,42 @@
+﻿@section Styles{
+    <link rel="stylesheet" href="./css/stylesheet.css" />
+}
+
+@{
+    ViewData["Title"] = "Index";
+}
+@if (ViewBag.Message != null)
+{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $(document).ready(function() {
+        alert("@ViewBag.Message");
+        });
+    </script>
+}
+
+<h1 class="text-center">Clientes</h1>
+
+<div class="card-deck" style="margin:10%">
+
+    <div class="card bg-dark">
+        <a class="nav-link" asp-controller="Clients" asp-action="CreateClient">
+            <div class="card-body text-center text-white">
+                <h5 class="card-title font-weight-bold">Registrar Cliente</h5>
+                <p class="card-text">Aquí puede registrar un cliente</p>
+            </div>
+        </a>
+    </div>
+
+
+    <div class="card bg-dark">
+        <a class="nav-link" asp-controller="Clients" asp-action="EditClient">
+            <div class="card-body text-center text-white">
+                <h5 class="card-title font-weight-bold">Editar Cliente</h5>
+                <p class="card-text">Aquí se puede editar un cliente existente</p>
+            </div>
+        </a>
+    </div>
+
+
+</div>

@@ -1,0 +1,41 @@
+﻿@model ICollection<Proyecto2_RubenLaraMarin.Models.Client>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1 class="text-center">Clientes</h1>
+
+<p>
+    <a asp-action="CreateClient">Agregar otro cliente</a>
+</p>
+<table class="table">
+    <thead class="text-center">
+        <tr>
+            <th>
+                Identificación
+            </th>
+            <th>
+                Nombre Completo
+            </th>
+            <th>
+                Número de teléfono
+            </th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

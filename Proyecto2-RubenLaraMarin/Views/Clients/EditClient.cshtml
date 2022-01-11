@@ -1,0 +1,74 @@
+﻿@model Proyecto2_RubenLaraMarin.Models.Client
+@using Newtonsoft.Json
+@{
+    ViewData["Title"] = "EditClient";
+}
+<head>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var list = [];
+            var client;
+            $('#client-data').change(function () {
+                var optionSelected = $('select option:selected').text();
+                @foreach (var i in JsonConvert.DeserializeObject<List<Client>>(TempData["ClientCollection"].ToString()))
+                {
+                    @: list.push({Id: '@i.ClientId', Name: '@i.ClientName', Phone: '@i.Phone'});
+                }
+                client = list.find(x => x.Id == optionSelected);
+                if (client == undefined) {
+                    client = null;
+                    $('#name-value').val('');
+                    $('#phone-value').val('');
+                    $('#client-id').val(0);
+                }
+                if (client != null) {
+                    $('#name-value').val(client.Name);
+                    $('#phone-value').val(client.Phone);
+                    $('#client-id').val(client.Id);
+                }
+            });
+        });
+    </script>
+</head>
+<h1 class="text-center">Editar Cliente</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <label for="client-data">Elija el cliente a editar</label>
+            <select id="client-data">
+                <option value="0" selected>0</option>
+                @foreach (var item in JsonConvert.DeserializeObject<List<Client>>(TempData["ClientCollection"].ToString()))
+                {
+                    <option value=@item.ClientId>@item.ClientId</option>
+                }
+            </select>
+
+        </div>
+        <form asp-action="EditClient" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClientName" class="control-label"></label>
+                <input id="name-value" asp-for="ClientName" class="form-control" />
+                <span asp-validation-for="ClientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input id="phone-value" asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" id="client-id" asp-for="ClientId" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

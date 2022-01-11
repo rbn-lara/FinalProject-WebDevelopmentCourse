@@ -1,0 +1,48 @@
+﻿@model Proyecto2_RubenLaraMarin.Models.Client
+
+@{
+    ViewData["Title"] = "CreateClient";
+}
+<head>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/radio-change-event.js"></script>
+</head>
+
+<h1>Agregar Cliente</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <label for="opcion1">Persona Física</label>
+            <input type="radio" id="opcion1" name="persona" value="fisica" />
+            <label for="opcion2">Persona Jurídica</label>
+            <input type="radio" id="opcion2" name="persona" value="juridica" />
+        </div>
+        <form asp-action="CreateClient" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClientId" class="control-label"></label>
+                <input asp-for="ClientId" class="form-control" />
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+            <label id="formato" class="form-text"></label>
+            <div class="form-group">
+                <label asp-for="ClientName" class="control-label"></label>
+                <input asp-for="ClientName" class="form-control" />
+                <span asp-validation-for="ClientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" placeholder="0000-0000" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="CreateClient" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
